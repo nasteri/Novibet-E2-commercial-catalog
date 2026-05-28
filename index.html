@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Novibet × E2 Commercial Catalog</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <style>
+    body {
+      background: #000;
+    }
+
+    .glass {
+      backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+
+<body class="bg-black text-white min-h-screen">
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden border-b border-white/10">
+
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-500/20 blur-[160px] rounded-full"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-8 py-20">
+
+      <div class="inline-flex items-center px-4 py-2 rounded-full border border-white/10 bg-white/5 glass text-sm mb-8">
+        E2 Communications × Novibet
+      </div>
+
+      <h1 class="text-6xl md:text-7xl font-bold tracking-tight leading-none">
+        Brazilian Market
+        <span class="block text-zinc-400">
+          Commercial Inventory
+        </span>
+      </h1>
+
+      <p class="mt-8 max-w-2xl text-zinc-300 text-lg leading-relaxed">
+        Interactive showcase of media inventory, acquisition channels,
+        WhatsApp opportunities, betting integrations and audience solutions
+        available for Novibet in Brazil.
+      </p>
+
+      <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+
+        <div class="p-6 rounded-3xl border border-white/10 bg-white/5 glass">
+          <div class="text-3xl font-bold" id="productCount">0</div>
+          <div class="mt-2 text-sm text-zinc-400">
+            Opportunities
+          </div>
+        </div>
+
+        <div class="p-6 rounded-3xl border border-white/10 bg-white/5 glass">
+          <div class="text-3xl font-bold">BR</div>
+          <div class="mt-2 text-sm text-zinc-400">
+            Brazilian Market
+          </div>
+        </div>
+
+        <div class="p-6 rounded-3xl border border-white/10 bg-white/5 glass">
+          <div class="text-3xl font-bold">Live</div>
+          <div class="mt-2 text-sm text-zinc-400">
+            Dynamic Catalog
+          </div>
+        </div>
+
+        <div class="p-6 rounded-3xl border border-white/10 bg-white/5 glass">
+          <div class="text-3xl font-bold">24/7</div>
+          <div class="mt-2 text-sm text-zinc-400">
+            Auto Updated
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section class="max-w-7xl mx-auto px-8 pt-12">
+
+    <div class="flex flex-wrap gap-3 mb-10">
+
+      <button class="filter-btn active px-5 py-2 rounded-full border border-white/10 bg-white/10">
+        All
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="max-w-7xl mx-auto px-8 pb-20">
+
+    <div id="products"
+      class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 py-10 px-8">
+
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+
+      <div>
+        <div class="text-xl font-semibold">
+          E2 Communications
+        </div>
+
+        <div class="text-zinc-500 mt-2">
+          Interactive commercial showcase for Novibet.
+        </div>
+      </div>
+
+      <div class="text-zinc-500 text-sm">
+        Powered by Google Sheets + Netlify
+      </div>
+
+    </div>
+
+  </footer>
+
+  <script>
+
+    // YOUR GOOGLE SHEETS CSV
+    const csvUrl =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCesZqzfpEktbf3l1_1inwNLbZpkcGiZ-uUAizGmoQqdtz4WjFfMTvnj8xfWuTuWE-cGrd8mwZ_KzK/pub?output=csv";
+
+    const productsContainer = document.getElementById("products");
+    const productCount = document.getElementById("productCount");
+
+    Papa.parse(csvUrl, {
+      download: true,
+      header: true,
+
+      complete: function(results) {
+
+        const data = results.data.filter(
+          item => Object.keys(item).length > 1
+        );
+
+        productCount.innerText = data.length;
+
+        data.forEach(product => {
+
+          const image =
+            product["Image URL"] ||
+            "https://images.unsplash.com/photo-1511884642898-4c92249e20b6?q=80&w=1600&auto=format&fit=crop";
+
+          const title =
+            product["Product"] ||
+            "Commercial Opportunity";
+
+          const category =
+            product["Category"] ||
+            "Inventory";
+
+          const description =
+            product["Description"] ||
+            "Audience acquisition and media opportunity.";
+
+          const commercial =
+            product["Commercial"] ||
+            "Custom Agreement";
+
+          const card = document.createElement("div");
+
+          card.className =
+            "group overflow-hidden rounded-[32px] border border-white/10 bg-zinc-950 hover:border-white/20 transition-all duration-300";
+
+          card.innerHTML = `
+            
+            <div class="relative h-[280px] overflow-hidden">
+
+              <img
+                src="${image}"
+                class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+              />
+
+              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+
+              <div class="absolute bottom-6 left-6 right-6">
+
+                <div class="inline-flex px-3 py-1 rounded-full border border-white/10 bg-black/40 glass text-xs mb-4">
+                  ${category}
+                </div>
+
+                <h2 class="text-4xl font-bold">
+                  ${title}
+                </h2>
+
+              </div>
+
+            </div>
+
+            <div class="p-8">
+
+              <p class="text-zinc-300 leading-relaxed">
+                ${description}
+              </p>
+
+              <div class="mt-8 p-5 rounded-3xl border border-emerald-500/20 bg-emerald-500/10">
+
+                <div class="text-xs uppercase tracking-wider text-emerald-300">
+                  Commercial Model
+                </div>
+
+                <div class="mt-2 text-lg font-semibold">
+                  ${commercial}
+                </div>
+
+              </div>
+
+            </div>
+
+          `;
+
+          productsContainer.appendChild(card);
+
+        });
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
